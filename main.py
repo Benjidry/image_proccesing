@@ -6,9 +6,11 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.clock import Clock
 from kivy.graphics.texture import Texture
-
+from dual_ilumin import enhance_image_exposure
 import cv2
 import numpy as np
+
+
 def equalize_rgb(image):
     # Separar los canales de la imagen
     r, g, b = cv2.split(image)
@@ -22,6 +24,20 @@ def equalize_rgb(image):
     image_eq = cv2.merge([r_eq, g_eq, b_eq])
     
     return image_eq
+
+def equalize_rgb_lab(img):
+    lab_img = cv2.cvtColor(img, cv2.COLOR_BGR2LAB)
+# Separar los canales de LAB (L, A, B)
+    l, a, b = cv2.split(lab_img)
+# Ecualizar el histograma solo en el canal L (luminosidad)
+    l_eq = cv2.equalizeHist(l)
+# Unir los canales de nuevo (L ecualizado, A y B originales)
+    lab_eq = cv2.merge([l_eq, a, b])
+# Convertir la imagen de nuevo a RGB
+    img_rgb_eq = cv2.cvtColor(lab_eq, cv2.COLOR_LAB2BGR)
+
+    return img_rgb_eq
+
 class FruitApp(App):
     kv_file = None 
 
@@ -50,7 +66,7 @@ class FruitApp(App):
         ret, frame = self.capture.read()
         if ret:
             print(frame)
-            frame = equalize_rgb(frame)
+            frame = enhance_image_exposure(frame, gamma=2.2, lambda_=0.15, dual=True, sigma=3)
 
             # Convertir la imagen para mostrarla en Kivy
             buffer = cv2.flip(frame, 0).tobytes()
