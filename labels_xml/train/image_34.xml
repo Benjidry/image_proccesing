@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>image_34.jpg</filename>
+	<path>/Users/azarielgonzales/Documents/GitHub/image_proccesing/dataset/images/train/image_34.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>1280</width>
+		<height>720</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>face_azariel</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>545</xmin>
+			<ymin>115</ymin>
+			<xmax>917</xmax>
+			<ymax>611</ymax>
+		</bndbox>
+	</object>
+</annotation>
